@@ -4,6 +4,8 @@ intents:
   - greet
   - goodbye
   - thank
+  - voice_input
+  - voice_output
 
 responses:
   utter_greet:
@@ -18,3 +20,7 @@ responses:
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+actions:
+  - voice_input
+  - voice_output

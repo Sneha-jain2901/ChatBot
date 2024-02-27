@@ -11,3 +11,8 @@ stories:
   steps:
   - intent: thank
   - action: utter_thanks
+
+- story: voice input
+  steps:
+  - intent: voice_input
+  - action: voice_output
