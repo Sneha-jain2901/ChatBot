@@ -3,15 +3,85 @@
 <head>
     <title>Rasa Chatbot</title>
     <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #messages {
+            margin-bottom: 20px;
+            overflow-y: auto;
+            max-height: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #dcf8c6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px;
+            max-width: 70%;
+            float: left;
+            clear: left;
+        }
+        #text-output {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+            overflow-wrap: break-word;
+            clear: both;
+        }
+
         .bot-message {
-          background-color: gainsboro;
-          padding: 10px;
-          border-radius: 5px;
-          margin: 5px;
-          max-width: 80%;
-          clear: both;
-          float: left;
-          color: #333;
+            background-color: #c6f0dc;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px;
+            max-width: 70%;
+            float: right;
+            clear: right;
+        }
+
+        #message-form {
+            display: flex;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+
+        #voice-input-button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 0 5px 5px 0;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #voice-output {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
         }
       </style>
 </head>
@@ -25,6 +95,7 @@
     </div>
     <button id="voice-input-button">Voice Input</button>
     <div id="voice-output"></div>
+    <div id="text-output"></div>
 
     <script>
         // Get elements
@@ -34,6 +105,7 @@
         const messageInput = document.getElementById('message-input');
         const voiceInputButton = document.getElementById('voice-input-button');
         const voiceOutput = document.getElementById('voice-output');
+        const textOutput = document.getElementById('text-output');
 
         // Send message
         messageForm.addEventListener('submit', (e) => {
@@ -59,6 +131,8 @@
                     responseElement.textContent = data.response;
                     responseElement.classList.add('bot-message');
                     messagesDiv.appendChild(responseElement);
+
+                    displayBotResponse(data.response);
 
                     // Scroll to bottom of chat
                     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -108,9 +182,8 @@
                 responseElement.textContent = data.response;
                 responseElement.classList.add('bot-message');
                 messagesDiv.appendChild(responseElement);
-                const textBox = document.getElementById('voice-output'); // Assuming 'voice-output' is the id of your text box
-    textBox.value = data.response;
-
+                // Display bot response in voice and text output
+                displayBotResponse(data.response);
 
                 // Scroll to bottom of chat
                 chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -160,6 +233,15 @@
             // Start recording indicator
             voiceInputButton.textContent = 'Recording...';
             voiceInputButton.style.backgroundColor = 'red';
+        };
+        function displayBotResponse(response) {
+            // Display bot response in voice output
+            voiceOutput.textContent = response;
+            voiceOutput.style.display = 'block';
+
+            // Display bot response in text output
+            textOutput.textContent = response;
+            textOutput.style.display = 'block';
         };
     </script>
 </body>
