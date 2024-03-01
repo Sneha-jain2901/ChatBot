@@ -4,15 +4,22 @@ stories:
 
 - story: happy path
   steps:
-  - intent: greet
-  - action: utter_greet
+    - intent: greet
+    - action: utter_greet
 
 - story: Express Thanks
   steps:
-  - intent: thank
-  - action: utter_thanks
+    - intent: thank
+    - action: utter_thanks
 
-- story: voice input
+- story: voice interaction
   steps:
-  - intent: voice_input
-  - action: voice_output
+    - intent: voice_input
+    - action: action_voice_integration
+
+# stories.yml
+
+- story: Voice Output Example
+  steps:
+    - intent: voice_output
+    - action: action_voice_integration

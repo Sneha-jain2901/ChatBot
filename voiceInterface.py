@@ -1,12 +1,13 @@
 import speech_recognition as sr
 import pyttsx3
+from rasa_sdk import Action
 
 def voice_input():
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
         recognizer.adjust_for_ambient_noise(source)
-        audio = recognizer.listen(source ,timeout=1)
+        audio = recognizer.listen(source ,timeout=3)
     try:
         text = recognizer.recognize_google(audio)
         print("You said: " + text)
@@ -34,3 +35,45 @@ if __name__ == "__main__":
             voice_output("You said: " + user_input)
         else:
             voice_output("Sorry, I couldn't understand. Can you please repeat that?")
+
+
+# import speech_recognition as sr
+# import pyttsx3
+
+# class VoiceIntegration:
+
+#     def __init__(self):
+#         self.recognizer = sr.Recognizer()
+#         self.engine = pyttsx3.init()
+
+#     def get_voice_input(self):
+#         """
+#         Get voice input from user.
+
+#         Returns:
+#             str: Voice input from user.
+#         """
+#         #recognizer = sr.Recognizer()
+#         with sr.Microphone() as source:
+#             print("Listening...")
+#             self.recognizer.adjust_for_ambient_noise(source)
+#             audio = self.recognizer.listen(source)
+
+#         try:
+#             text = self.recognizer.recognize_google(audio)
+#             print("You said: ", text)
+#             return text
+#         except Exception as e:
+#             print("Error during voice input:", e)
+#             return None
+
+#     def output_voice(self, text):
+#         """
+#         Output voice message.
+
+#         Args:
+#             text (str): Text message to output as voice.
+#         """
+#         self.engine.say(text)
+#         self.engine.runAndWait()
+    

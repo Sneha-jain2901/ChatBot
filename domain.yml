@@ -5,22 +5,21 @@ intents:
   - goodbye
   - thank
   - voice_input
-  - voice_output
+  - voice_output  # Corrected the intent name
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+    - text: "Hello! I am your voice-enabled chatbot. How can I assist you today?"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Bye"
 
   utter_thanks:
-  - text: "You are welcome,it was my pleasure to assist you "
+    - text: "You are welcome, it was my pleasure to assist you"
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
 actions:
-  - voice_input
-  - voice_output
+  - action_voice_integration

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rasa Chatbot</title>
+    <style>
+        .bot-message {
+          background-color: gainsboro;
+          padding: 10px;
+          border-radius: 5px;
+          margin: 5px;
+          max-width: 80%;
+          clear: both;
+          float: left;
+          color: #333;
+        }
+      </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <form id="message-form">
+            <input type="text" id="message-input" placeholder="Type your message here...">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <button id="voice-input-button">Voice Input</button>
+    <div id="voice-output"></div>
+
+    <script>
+        // Get elements
+        const chatContainer = document.getElementById('chat-container');
+        const messagesDiv = document.getElementById('messages');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const voiceInputButton = document.getElementById('voice-input-button');
+        const voiceOutput = document.getElementById('voice-output');
+
+        // Send message
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (message.length > 0) {
+                // Add message to chat
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messageElement.classList.add('user-message');
+                messagesDiv.appendChild(messageElement);
+
+                // Send message to server
+                fetch('/chat', {
+                    method: 'POST',
+                    body: new URLSearchParams({ message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Add bot response to chat
+                    console.log('Data from server:', data);
+                    const responseElement = document.createElement('div');
+                    responseElement.textContent = data.response;
+                    responseElement.classList.add('bot-message');
+                    messagesDiv.appendChild(responseElement);
+
+                    // Scroll to bottom of chat
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                    // Clear input field
+                    messageInput.value = '';
+                    console.log('Message displayed on the website:', data.response);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+
+        // Initialize SpeechRecognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        // Set recognition language
+        recognition.lang = 'en-US';
+
+        // Set recognition result format
+        recognition.interimResults = false;
+
+        // Set recognition maximum alternative
+        recognition.maxAlternatives = 1;
+
+        // Set recognition onresult event listener
+        recognition.onresult = (event) => {
+            // Get transcript from event
+            const transcript = event.results[0][0].transcript;
+
+            // Add message to chat
+            const messageElement = document.createElement('div');
+            messageElement.textContent = transcript;
+            messageElement.classList.add('user-message');
+            messagesDiv.appendChild(messageElement);
+
+            // Send message to server
+            fetch('/chat', {
+                method: 'POST',
+                body: new URLSearchParams({ message: transcript }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from /chat:', data);
+                // Add bot response to chat
+                const responseElement = document.createElement('div');
+                responseElement.textContent = data.response;
+                responseElement.classList.add('bot-message');
+                messagesDiv.appendChild(responseElement);
+                const textBox = document.getElementById('voice-output'); // Assuming 'voice-output' is the id of your text box
+    textBox.value = data.response;
+
+
+                // Scroll to bottom of chat
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                // Speak response using SpeechSynthesis
+                const SpeechSynthesis = window.SpeechSynthesis || window.speechSynthesis;
+                if (SpeechSynthesis && SpeechSynthesis.speak) {
+                    const utterance = new SpeechSynthesisUtterance(data.response);
+                    SpeechSynthesis.speak(utterance);
+
+                    // Set voice output
+                     voiceOutput.textContent = data.response;
+                        } else {
+                            console.error('SpeechSynthesis is not supported or the speak method is not available.');
+                        }if (voiceOutput) {
+                            voiceOutput.textContent = data.response;
+                         } else {
+                                console.error('Voice output element not found.');
+                        }
+                        // Add text response to chat (optional)
+                        const textResponseElement = document.createElement('div');
+                        textResponseElement.textContent = data.response;
+                        textResponseElement.classList.add('bot-message');
+                        messagesDiv.appendChild(textResponseElement);
+
+                        // Scroll to bottom of chat
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                                    });
+        };
+
+        // Set voice input button click event listener
+        voiceInputButton.addEventListener('click', () => {
+            // Start recognition
+            recognition.start();
+        });
+
+        // Set recognition onend event listener
+        recognition.onend = () => {
+            // Stop recording indicator
+            voiceInputButton.textContent = 'Voice Input';
+            voiceInputButton.style.backgroundColor = '';
+        };
+
+        // Set recognition onstart event listener
+        recognition.onstart = () => {
+            // Start recording indicator
+            voiceInputButton.textContent = 'Recording...';
+            voiceInputButton.style.backgroundColor = 'red';
+        };
+    </script>
+</body>
+</html>

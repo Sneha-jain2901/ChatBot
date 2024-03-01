@@ -1,0 +1,30 @@
+conda activate rasa_bot
+cd downloads
+cs chatBot
+cd chatBot
+cd secPro
+python voice_integration.py
+rasa train
+rasa shell
+rasa shell nlu
+rasa train
+rasa shell
+rasa train
+rasa shell
+rasa run actions --debug
+rasa run -m models --enable-api --cors "*" --debug
+  eee
+rasa train
+rasa shell
+rasa run actions
+rasa run -m models --enable-api --cors "*" --debug
+python voice_integration.py
+python voiceInterface.py
+rasa run actions
+pip install -U rasa-sdk
+pip install protobuf==3.20.2
+pip install -U rasa-sdk
+rasa run actions
+pip show rasa-sdk
+history > command_history.txt
+doskey /history > command_history.txt

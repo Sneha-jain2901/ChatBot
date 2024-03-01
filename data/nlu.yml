@@ -31,8 +31,18 @@ nlu:
     - see you later
 
 - intent: thank
-  examples:
-    -thanks
-    -thank you
-    -appereciate it
-    -many thanks
+  examples: |
+    - thanks
+    - thank you
+    - appereciate it
+    - many thanks
+
+- intent: voice_input
+  examples: |
+    - How can you help me?
+    - What can you do for me?
+
+- intent: voice_output
+  examples: |
+    - I want assistance.
+    - Tell me more about your capabilities.
