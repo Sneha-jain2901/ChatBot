@@ -28,11 +28,13 @@ def chat():
         return jsonify({'error': 'Error coonecting to rasa server'})
     # Extract text response and voice output from Rasa
     bot_response_text = rasa_response[0]['text'] if rasa_response else 'Sorry, I didn\'t understand that.'
-    bot_response_voice = rasa_response[0]['voice_output'] if 'voice_output' in rasa_response[0] else None
+    if rasa_response:
+        bot_response_voice = rasa_response[0].get('voice_output', None)
+    else:
+        bot_response_voice = None
 
     print('Bot text response:', bot_response_text)
     print('Bot voice output:', bot_response_voice)
-
     return jsonify({'text_response': bot_response_text, 'voice_output': bot_response_voice})
 
 if __name__ == '__main__':

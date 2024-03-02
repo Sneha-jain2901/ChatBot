@@ -7,3 +7,7 @@ rules:
   - intent: goodbye
   - action: utter_goodbye
 
+- rule: Respond to greeting and happy mood
+  steps:
+  - intent: greet
+  - action: utter_greet

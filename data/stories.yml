@@ -24,4 +24,94 @@ stories:
     - intent: voice_output
     - action: action_voice_integration
 
+- story: Recommend song
+  steps:
+  - intent: recommend_song
+  - action: utter_recommend_song
+
+- story: Goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Recommend a book based on specified genre
+  steps:
+  - intent: inform_genre
+    entities:
+      - genre
+  - slot_was_set:
+      - genre: true
+  - action: action_search_books_by_genre
+
+
+- story: Recommend a general book if genre is not specified
+  steps:
+  - intent: request_book_recommendation
+  - action: action_search_books
+
+- story: Book details inquiry
+  steps:
+  - intent: book_details  
+  - entities:
+    - book
+  - slot_was_set:
+    - book: true
+  - action: ActionGiveDetails
+  - action: utter_give_details
+
+- story: Latest book releases inquiry
+  steps:
+  - intent: latest_book_releases
+  - action: action_latest_book_releases
+  - action: utter_latest_book_releases
+
+- story: Popular authors inquiry
+  steps:
+  - intent: popular_authors
+  - entities:
+      - author
+  - slot_was_set:
+      - book: true
+  - action: action_popular_authors
+  - action: utter_popular_authors
+
+- story: Book search inquiry                      #books like [book]
+  steps:
+  - intent: search_book
+  - entities:
+     - book
+  - slot_was_set:
+      - book: true
+  - action: action_Search_book
+  - action: utter_Search_book
+
+- story: Handle Insult
+  steps:
+  - intent: handleinsult
+  - action: utter_handle_insult
+
+- story: Tell Joke
+  steps:
+  - intent: telljoke
+  - action: utter_tell_joke
+
+- story: Ask Wherefrom
+  steps:
+  - intent: ask_wherefrom
+  - action: utter_ask_wherefrom
+
+- story: Ask How Old
+  steps:
+  - intent: ask_howold
+  - action: utter_ask_howold
+
+- story: Ask Languages Bot
+  steps:
+  - intent: ask_languagesbot
+  - action: utter_ask_languagesbot
+
+- story: Ask Who Am I
+  steps:
+  - intent: ask_whoami
+  - action: utter_ask_whatismyname
 

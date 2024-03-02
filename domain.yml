@@ -17,8 +17,10 @@ intents:
   - telljoke
   - ask_wherefrom
   - ask_howold
-  -  ask_whoami
+  - ask_whoami
+  - ask_builder
   - ask_languagesbot
+  - ask_weather
 
 responses:
   utter_greet:
@@ -138,3 +140,7 @@ slots:
         entity: author
     influence_conversation: true  # Set to true if you want this slot to influence conversation
 
+entities:
+  - genre
+  - book
+  - author

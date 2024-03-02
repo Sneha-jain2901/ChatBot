@@ -51,7 +51,7 @@
       } */
 
       .bot-image {
-        background-color:black;
+        background-color: black;
         border-radius: 5px;
         margin: 5px;
         max-width: 5%;
@@ -165,7 +165,7 @@
               responseElement.appendChild(imageElement);
 
               // Append the bot message to messagesDiv
-               messagesDiv.appendChild(responseElement);
+              messagesDiv.appendChild(responseElement);
               //messagesDiv.appendChild(responseElement);
               displayBotResponse(data.text_response);
 
@@ -175,7 +175,9 @@
               // Clear input field
               messageInput.value = "";
             })
-            .catch((error) => console.error("Error:", error));
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         }
       });
 
@@ -215,11 +217,11 @@
             // Add bot response to chat
             const responseElement = document.createElement("div");
             responseElement.classList.add("bot-image");
-              const imageElement = document.createElement("img");
-              imageElement.src = "/static/logo.png"; // Set the path to your image
-              //imageElement.classList.add("bot-image");
-              responseElement.appendChild(imageElement);
-              messagesDiv.appendChild(responseElement);
+            const imageElement = document.createElement("img");
+            imageElement.src = "/static/logo.png"; // Set the path to your image
+            //imageElement.classList.add("bot-image");
+            responseElement.appendChild(imageElement);
+            messagesDiv.appendChild(responseElement);
             // Display bot response in voice and text output
             displayBotResponse(data.text_response);
 
