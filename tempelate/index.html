@@ -7,14 +7,15 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background-color: #181515;
       }
 
       #chat-container {
         max-width: 800px;
+        height: 500px;
         margin: 0 auto;
         padding: 20px;
-        background-color: #fff;
+        background-color: #181515;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
@@ -36,7 +37,7 @@
         float: left;
         clear: left;
       }
-      #text-output {
+      /* #text-output {
         margin-top: 10px;
         padding: 10px;
         border: 1px solid #ddd;
@@ -47,8 +48,18 @@
         color: black;
         overflow-y: auto;
         overflow-x: scroll;
-      }
+      } */
 
+      .bot-image {
+        background-color:black;
+        border-radius: 5px;
+        margin: 5px;
+        max-width: 5%;
+        max-height: 5%;
+        float: right;
+        clear: right;
+        color: #000;
+      }
       .bot-message {
         background-color: #c6f0dc;
         padding: 10px;
@@ -59,6 +70,12 @@
         clear: right;
         color: #000;
         font-weight: bold;
+      }
+      .bot-image img {
+        max-width: 100%; /* Set the image width to a maximum of 100% of its container */
+        height: auto; /* Maintain the image's aspect ratio */
+        display: block; /* Prevent any extra spacing below the image */
+        /*margin-top: 10px;  Adjust this margin based on your design */
       }
 
       #message-form {
@@ -105,6 +122,7 @@
     </div>
     <div id="voice-output"></div>
     <div id="text-output"></div>
+    <div it="bot-image"></div>
 
     <script>
       // Get elements
@@ -116,6 +134,7 @@
       const voiceOutput = document.getElementById("voice-output");
       const textOutput = document.getElementById("text-output");
       const botMsg = document.getElementById("bot-message");
+      const botIm = document.getElementById("bot-image");
 
       // Send message
       messageForm.addEventListener("submit", (e) => {
@@ -139,9 +158,15 @@
               console.log("Data from server:", data);
               const responseElement = document.createElement("div");
 
-              responseElement.textContent = data.response;
-              responseElement.classList.add("bot-message");
-              messagesDiv.appendChild(responseElement);
+              //responseElement.textContent = data.response;
+              responseElement.classList.add("bot-image"); // Add image to bot message (modify the image source accordingly)
+              const imageElement = document.createElement("img");
+              imageElement.src = "/static/logo.png"; // Set the path to your image
+              responseElement.appendChild(imageElement);
+
+              // Append the bot message to messagesDiv
+               messagesDiv.appendChild(responseElement);
+              //messagesDiv.appendChild(responseElement);
               displayBotResponse(data.text_response);
 
               // Scroll to bottom of chat
@@ -189,9 +214,12 @@
             console.log("Response from /chat:", data);
             // Add bot response to chat
             const responseElement = document.createElement("div");
-            responseElement.textContent = data.response;
-            responseElement.classList.add("bot-message");
-            messagesDiv.appendChild(responseElement);
+            responseElement.classList.add("bot-image");
+              const imageElement = document.createElement("img");
+              imageElement.src = "/static/logo.png"; // Set the path to your image
+              //imageElement.classList.add("bot-image");
+              responseElement.appendChild(imageElement);
+              messagesDiv.appendChild(responseElement);
             // Display bot response in voice and text output
             displayBotResponse(data.text_response);
 
@@ -217,11 +245,6 @@
             } else {
               console.error("Voice output element not found.");
             }
-            // Add text response to chat (optional)
-            const textResponseElement = document.createElement("div");
-            textResponseElement.textContent = data.response;
-            textResponseElement.classList.add("bot-message");
-            messagesDiv.appendChild(textResponseElement);
 
             // Scroll to bottom of chat
             chatContainer.scrollTop = chatContainer.scrollHeight;

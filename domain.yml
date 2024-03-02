@@ -6,6 +6,19 @@ intents:
   - thank
   - voice_input
   - voice_output  # Corrected the intent name
+  - recommend_song
+  - request_book_recommendation         #general recommendation
+  - book_details
+  - latest_book_releases
+  - popular_authors
+  - search_book                         #books like [book]
+  - inform_genre
+  - handleinsult
+  - telljoke
+  - ask_wherefrom
+  - ask_howold
+  -  ask_whoami
+  - ask_languagesbot
 
 responses:
   utter_greet:
@@ -17,9 +30,111 @@ responses:
   utter_thanks:
     - text: "You are welcome, it was my pleasure to assist you"
 
+  utter_recommend_song:
+    - text: "Sure, I can recommend a song based on your preferred genre. Please tell me your favorite genre."
+
+  utter_song_recommendation:
+    - text: "I recommend the following song(s) in the genre {genre}: {songs}"
+
+  utter_book_recommendation:
+    - text: "Sure, I can recommend a book for you."
+
+  utter_Search_book:
+    - text: "Here is the book that you searched for: {book}"
+
+  utter_latest_book_releases:
+    - text: "Here are the latest book releases: {book_releases}"
+
+  utter_popular_authors:
+    - text: "Here are some popular authors: {popular_authors}"
+
+  utter_ask_weather:
+    - text: "I'm sorry. I'm a recommendation bot and do not have information about your location."
+
+  utter_ask_builder:
+    - text: "I was created by a team of developers at GEU during Code Crusade."
+
+  utter_ask_restaurant:
+    - text: "I'm sorry I prefer to eat at home."
+
+  utter_handle_insult:
+    - text: "I'm sorry you feel that way. If you need assistance, feel free to ask."
+
+  utter_tell_joke:
+    - text: "Sure, here's a joke: Why don't scientists trust atoms? Because they make up everything!"
+
+  utter_ask_wherefrom:
+    - text: "The world is my oyster! Though I was made in GEU, Dehradun during mini-hackathon."
+
+  utter_ask_howold:
+    - text: "I am an AI assistant, so I don't have an age in the traditional sense."
+
+  utter_ask_whoami:
+    - text: "You are interacting with a virtual assistant developed by byteBuddies at GEU, Dehradun. You can call me Alex."
+
+  utter_ask_languagesbot:
+    - text: "I am in the development phase and hence can only understand English, but I look forward to being multilingual!"
+
+  utter_ask_whatismyname:
+    - text: "I don't have access to your personal information, including your name. You can call me Alex."
+
+  utter_give_details:
+    - text: "Here are the details you requested..."
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
 actions:
   - action_voice_integration
+  - utter_give_details
+  - utter_recommend_song
+  - utter_song_recommendation
+  - utter_book_recommendation
+  - utter_Search_book
+  
+  - utter_latest_book_releases
+  - utter_popular_authors
+  - action_search_books
+  - action_latest_book_releases
+  - action_popular_authors
+  - action_song_recommendation
+  - action_recommend_books
+  - action_give_details
+  - action_Search_book
+
+  - action_book_details
+  - action_goodbye
+  - action_greet
+  - action_languages
+  - action_search_books_by_genre
+  - action_search_general_books
+  - action_weather_info
+  - action_wherefrom
+  - action_whoami
+  - action_whatismyname
+  - ActionGiveDetails
+
+
+slots:
+  genre:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: genre
+    influence_conversation: true  # Set to true if you want this slot to influence conversation
+
+  book:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: book
+    influence_conversation: true  # Set to true if you want this slot to influence conversation
+
+  author:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: author
+    influence_conversation: true  # Set to true if you want this slot to influence conversation
+

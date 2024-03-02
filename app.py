@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask import send_from_directory
 import requests
 
 app = Flask(__name__, template_folder='tempelate')
@@ -9,6 +10,9 @@ RASA_API_URL = 'http://localhost:5005/webhooks/rest/webhook'
 @app.route('/')
 def index():
     return render_template('index.html')
+@app.route('/static/<filename>')
+def serve_static(filename):
+    return send_from_directory('static', filename)
 
 @app.route('/chat', methods=['POST'])
 def chat():

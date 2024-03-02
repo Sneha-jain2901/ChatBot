@@ -54,6 +54,8 @@
 # In actions.py
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
+from typing import Any, Text, Dict, List
+from rasa_sdk.executor import CollectingDispatcher
 
 from .voice_integration import VoiceIntegrationAction
 
@@ -83,3 +85,4 @@ class VoiceOutputWrapper(Action):
         text = tracker.latest_message.get('text', '')
         VoiceIntegrationAction().voice_output(text)
         return []
+    
